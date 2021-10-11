@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const compression = require('compression');
 
 const updateCurrencyJob = require('./jobs/updateCurrency');
 const userRoutes = require('./routes/user');
@@ -8,9 +9,11 @@ const userRoutes = require('./routes/user');
 const PORT = process.env.PORT || 8000;
 const URL = process.env.MONGODB_URI;
 
-express.urlencoded({extended: true});
-
 const app = express();
+app.use(express.urlencoded({extended: true}));
+
+// decrease the size of the req body to incr. performance
+app.use(compression());
 
 // Connect to mongoDb
 mongoose
