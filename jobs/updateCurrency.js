@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob;
 
-const Data = require('../controllers/updateData');
+const currencyController = require('../controllers/currencyController');
 
 module.exports = new CronJob('*/30 * * * *', (async() => {
-  await Data.update();
+  await currencyController.update();
 }), null, false, 'America/Los_Angeles');
