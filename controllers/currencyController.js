@@ -1,6 +1,4 @@
-const { configs } = require('eslint-plugin-sonarjs');
 const fetch = require('isomorphic-fetch');
-
 const Currency = require('../models/CurrencyModel');
 const coins = require('../acronym.json');
 
