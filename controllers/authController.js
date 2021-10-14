@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 
 const User = require('../models/UserModel');
 const emailController = require('./emailController');
@@ -56,7 +55,7 @@ class authController {
     try {
       const {firstName,lastName,username,password,emailId} = req.body;
       const pwdHash = await this.generateHash(password);
-      const userData = new User({ _id: new mongoose.Types.ObjectId(), firstName,lastName,username,pwdHash,emailId});
+      const userData = new User({ firstName,lastName,username,pwdHash,emailId});
       await User.create(userData);
       const URL = await this.generateVerifyURL({username, emailId});
       await emailController.sendVerification(URL,emailId);
@@ -67,7 +66,7 @@ class authController {
     } catch (err) {
       if (err.code === 11000) {
         res.status(400).json({status: 0, msg: 'Username or emailId already exists'});
-        // console.log(err);
+        console.log(err);
         return;
       }
       console.log(err);
@@ -106,11 +105,16 @@ class authController {
     try {
       const { token } = req.query;
       const secretKey = process.env.PRIVATEKEY;
-      const decoded = await jwt.verify(token,secretKey);
-      const { username } = decoded; // username, emailId
-      this.username = username;
-      await User.findOneAndUpdate({username},{isVerified: true});
-      res.json({status: 1, msg: 'Successfully verified User'});
+      jwt.verify(token,secretKey, async (err,decoded) => {
+        if (err) {
+          console.log(err);
+          res.status(404).json({status: 0, msg: 'Token Expired'});
+          return;
+        }
+        const { username } = decoded;
+        await User.findOneAndUpdate({username},{isVerified: true});
+        res.json({status: 1, msg: 'Successfully verified User'});
+      });
     } catch (err) {
       console.log(err);
       res.status(500).json({status: 0, msg: 'Something went wrong'});
