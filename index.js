@@ -3,8 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const compression = require('compression');
 const cors = require('cors');
-const fetch = require('isomorphic-fetch');
-const fs = require('fs');
 const updateCurrencyJob = require('./jobs/updateCurrency');
 const userRoutes = require('./routes/user');
 
