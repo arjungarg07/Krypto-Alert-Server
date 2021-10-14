@@ -62,7 +62,9 @@ mongoose
 updateCurrencyJob.start();
 
 app.use('/api/v1',userRoutes);
-
+app.get('/',(req,res) => {
+  res.send('Welcome to the Krypto Alert Server');
+});
 app.listen(PORT,() => {
   console.log(`Server listening on ${PORT}`);
 });
