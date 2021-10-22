@@ -11,12 +11,12 @@ const PORT = process.env.PORT || 8000;
 const URL = process.env.MONGODB_URI;
 
 const app = express();
+
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({extended: true, type: 'application/json'}));
 app.use(cors({credentials: true, origin: true}));
 // decrease the size of the req body to incr. performance
-
 app.use(compression());
 
 // Connect to mongoDb
