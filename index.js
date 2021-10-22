@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const updateCurrencyJob = require('./jobs/updateCurrency');
 const userRoutes = require('./routes/user');
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 const URL = process.env.MONGODB_URI;
 
 const app = express();
