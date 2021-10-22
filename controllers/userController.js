@@ -1,5 +1,5 @@
-const User = require('../models/UserModel');
-const Alert = require('../models/AlertModel');
+const user = require('../models/userModel');
+const alert = require('../models/alertModel');
 
 class userController {
   async data(req,res) {
@@ -7,11 +7,11 @@ class userController {
       const authData = req.authData;
       if (!authData) return res.status(404).json({status: 1, msg: 'Unauthenticated'});
       const { userId } = authData;
-      const unfilteredData = await User.findOne({_id: userId});
+      const unfilteredData = await user.findOne({_id: userId});
       // eslint-disable-next-line no-unused-vars
       const {_id, pwdHash, __v, ...userDetails} = unfilteredData._doc;
       console.log(userDetails);
-      const alertDetails = await Alert.find({userId,isSent: false});
+      const alertDetails = await alert.find({userId,isSent: false});
       console.log(alertDetails);
       const results = {userDetails, alertDetails};
       if (!userDetails) {res.status(404).send({status: 1, msg: 'User Details not found'}); return; }

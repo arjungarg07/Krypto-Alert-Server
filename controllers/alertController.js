@@ -1,9 +1,9 @@
-const Alert = require('../models/AlertModel');
+const alert = require('../models/alertModel');
 
 class alertController {
   async countAlert(userId) {
     try {
-      const data = await Alert.find({userId,isSent: false}); 
+      const data = await alert.find({userId,isSent: false}); 
       console.log(data);
       return data;
     } catch (err) {
@@ -20,9 +20,9 @@ class alertController {
         return;
       }
       const { userId } = authData;
-      const data =  await Alert.update({userId,coin,triggerPrice},{isSent: true});
+      const data =  await alert.update({userId,coin,triggerPrice},{isSent: true});
       console.log(data);
-      res.json({status: 1, msg: 'Alert deleted Successfully'});
+      res.json({status: 1, msg: 'alert deleted Successfully'});
     } catch (err) {
       console.log(err);
       res.status(500).json({status: 0, msg: 'Internal Server Error'});
@@ -44,12 +44,12 @@ class alertController {
       const { userId } = authData;
       const count = await this.countAlert(userId);
       if (count.length>=2) {
-        res.status(200).json({status: 1, msg: 'Max Alert Limit reached'});
+        res.status(200).json({status: 1, msg: 'Max alert Limit reached'});
         return;
       }
       const alertDetails = {userId, coin, triggerPrice, isDrop};
-      await Alert.create(alertDetails);
-      res.json({status: 1, msg: 'Alert set Successfully'});
+      await alert.create(alertDetails);
+      res.json({status: 1, msg: 'alert set Successfully'});
     } catch (err) {
       console.log(err);
       res.status(500).json({status: 0, msg: 'Internal Server Error'});

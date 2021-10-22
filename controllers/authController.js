@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
 
-const User = require('../models/UserModel');
+const user = require('../models/userModel');
 const emailController = require('./emailController');
 
 const saltRounds = 10;
@@ -105,13 +105,13 @@ class authController {
       }
       console.log(req.body);
       const pwdHash = await this.generateHash(password);
-      const userData = new User({ name, username, pwdHash, emailId });
-      await User.create(userData);
+      const userData = new user({ name, username, pwdHash, emailId });
+      await user.create(userData);
       const URL = await this.generateVerifyURL({ username, emailId });
       await emailController.sendVerification(URL, emailId);
       res.status(200).send({
         status: 1,
-        msg: 'User registered successfully',
+        msg: 'user registered successfully',
       });
     } catch (err) {
       if (err.code === 11000) {
@@ -136,7 +136,7 @@ class authController {
           .json({ status: 2, msg: 'Username and password required' });
         return;
       }
-      const existingUser = await User.findOne({ username });
+      const existingUser = await user.findOne({ username });
       console.log(existingUser);
       if (!existingUser) {
         res.status(200).json({ status: 2, msg: 'Username doesn\'t exist' });
@@ -188,8 +188,8 @@ class authController {
           return;
         }
         const { username } = decoded;
-        await User.findOneAndUpdate({ username }, { isVerified: true });
-        res.json({ status: 1, msg: 'Successfully verified User' });
+        await user.findOneAndUpdate({ username }, { isVerified: true });
+        res.json({ status: 1, msg: 'Successfully verified user' });
       });
     } catch (err) {
       console.log(err);
