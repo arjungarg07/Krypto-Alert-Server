@@ -1,5 +1,5 @@
 const fetch = require("isomorphic-fetch");
-const Currency = require("../models/CurrencyModel");
+const currency = require("../models/currencyModel");
 const coins = require("../acronym.json");
 
 const resourceUrl = process.env.TICKER_API;
@@ -30,7 +30,7 @@ class currencyController {
         currency[`${acronym}USDT`] = usd_obj;
         currency[acronym] = inr_obj;
       });
-      await Currency.findByIdAndUpdate(CurrencyOID, currency);
+      await currency.findByIdAndUpdate(CurrencyOID, currency);
     } catch (err) {
       console.log(err);
     }
@@ -39,7 +39,7 @@ class currencyController {
   async getTop(req, res) {
     try {
       const id = process.env.CURRENCY_OID;
-      const results = await Currency.findById(id);
+      const results = await currency.findById(id);
       const { BTCUSDT, BNBUSDT, ETHUSDT, DOGEUSDT, ADAUSDT, XRPUSDT } =
         results._doc;
       // console.log(results._doc.BTC);
@@ -70,7 +70,7 @@ class currencyController {
   async getAll(req, res) {
     try {
       const id = process.env.CURRENCY_OID;
-      const results = await Currency.findById(id);
+      const results = await currency.findById(id);
       // eslint-disable-next-line no-unused-vars
       const { _id, __v, ...filteredData } = results._doc;
       const resultArray = [];
