@@ -19,6 +19,9 @@ app.use(cors({credentials: true, origin: true}));
 // decrease the size of the req body to incr. performance
 app.use(compression());
 
+// Proxies with heroku
+app.set('trust proxy', 1);
+
 // Connect to mongoDb
 mongoose
   .connect(URL, {
@@ -35,9 +38,11 @@ mongoose
 updateCurrencyJob.start();
 
 app.use('/api/v1',userRoutes);
+
 app.get('/',(req,res) => {
   res.send('Welcome to the Krypto Alert Server');
 });
+
 app.listen(PORT,() => {
   console.log(`Server listening on ${PORT}`);
 });
