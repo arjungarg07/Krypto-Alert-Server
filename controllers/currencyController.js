@@ -39,7 +39,7 @@ class currencyController {
   async getTop(req, res) {
     try {
       const id = process.env.CURRENCY_OID;
-      const results = await currency.findById(id);
+      const results = await Currency.findById(id);
       const { BTCUSDT, BNBUSDT, ETHUSDT, DOGEUSDT, ADAUSDT, XRPUSDT } =
         results._doc;
       // console.log(results._doc.BTC);
@@ -70,7 +70,7 @@ class currencyController {
   async getAll(req, res) {
     try {
       const id = process.env.CURRENCY_OID;
-      const results = await currency.findById(id);
+      const results = await Currency.findById(id);
       // eslint-disable-next-line no-unused-vars
       const { _id, __v, ...filteredData } = results._doc;
       const resultArray = [];
