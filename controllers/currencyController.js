@@ -1,5 +1,5 @@
 const fetch = require("isomorphic-fetch");
-const currency = require("../models/currencyModel");
+const Currency = require("../models/currencyModel");
 const coins = require("../acronym.json");
 
 const resourceUrl = process.env.TICKER_API;
@@ -30,7 +30,7 @@ class currencyController {
         currency[`${acronym}USDT`] = usd_obj;
         currency[acronym] = inr_obj;
       });
-      await currency.findByIdAndUpdate(CurrencyOID, currency);
+      await Currency.findByIdAndUpdate(CurrencyOID, currency);
     } catch (err) {
       console.log(err);
     }
