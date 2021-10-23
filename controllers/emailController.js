@@ -1,4 +1,4 @@
-const { CourierClient } = require('@trycourier/courier');
+const { CourierClient } = require("@trycourier/courier");
 
 class emailController {
   async sendVerification(verifyURL,emailId) {

@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const jwtDecode = require('jwt-decode');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const jwtDecode = require("jwt-decode");
 
-const user = require('../models/userModel');
-const emailController = require('./emailController');
+const user = require("../models/userModel");
+const emailController = require("./emailController");
 
 const saltRounds = 10;
 

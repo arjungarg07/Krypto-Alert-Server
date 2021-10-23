@@ -1,4 +1,4 @@
-const alert = require('../models/alertModel');
+const alert = require("../models/alertModel");
 
 class alertController {
   async countAlert(userId) {

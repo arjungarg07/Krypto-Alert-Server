@@ -1,5 +1,5 @@
-const user = require('../models/userModel');
-const alert = require('../models/alertModel');
+const user = require("../models/userModel");
+const alert = require("../models/alertModel");
 
 class userController {
   async data(req,res) {
