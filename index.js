@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 const compression = require('compression');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+
 const updateCurrencyJob = require('./jobs/updateCurrency');
+
 const userRoutes = require('./routes/user');
 
 const PORT = process.env.PORT;
@@ -12,13 +15,14 @@ const URL = process.env.MONGODB_URI;
 
 const app = express();
 
-app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({extended: true, type: 'application/json'}));
 app.use(cors({credentials: true, origin: true}));
 // decrease the size of the req body to incr. performance
 app.use(compression());
 
+app.use(cookieParser());
+app.use(helmet());
 // Proxies with heroku
 app.set('trust proxy', 1);
 
@@ -38,7 +42,6 @@ mongoose
 updateCurrencyJob.start();
 
 app.use('/api/v1',userRoutes);
-
 app.get('/',(req,res) => {
   res.send('Welcome to the Krypto Alert Server');
 });
