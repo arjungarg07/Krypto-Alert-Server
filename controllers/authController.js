@@ -173,7 +173,7 @@ class authController {
 
   async generateVerifyURL(creds) {
     const token = await this.generateJwtToken(creds, 60 * 60 * 24 * 2);
-    return `http://localhost:8000/api/v1/signup/validate/?token=${token}`;
+    return `https://kryptoalert.herokuapp.com/api/v1/signup/validate/?token=${token}`;
   }
 
   async verifyUser(req, res) {
